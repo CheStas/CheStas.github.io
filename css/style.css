@@ -21,7 +21,6 @@
 .whapper {
   background: url(../img/headerbackground.jpg) no-repeat;
   background-position: top center;
-  background-size: cover;
   overflow: auto;
   font-family: 'league_gothicregular';
 }
