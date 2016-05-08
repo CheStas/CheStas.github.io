@@ -1,0 +1,48 @@
+.wrapper {
+    width: 80%;
+    margin: 0 10% 0 10%;
+}
+
+.timer {
+    margin: 30px auto;
+    border: 3px solid #000;
+    border-radius: 10px;
+    font-size: 7vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.result {
+    border: none;
+    font-size: 3vw;
+    margin: 5px auto;
+}
+
+.timer__child {
+    width: 10vw;
+}
+
+.timer__milisec {
+    font-size: 5vw;
+    color: #ccc;
+}
+.wrapper__button {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button {
+    width: 15%;
+    height: 5vw;
+    font-size: 3vw;
+    border: 3px solid #000;
+    border-radius: 10px;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.start__pause {
+    display: none;
+}
