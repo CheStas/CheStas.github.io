@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrap {
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Open Sans'
+}
+
+header,
+section {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    border-top: 3px solid #27649d;
+}
+
+.title {
+    margin-right: 10px;
+    flex-basis: 60%;
+}
+
+.title-name {
+    padding: 15px 0 5px;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.title-position {
+    color: #27649d;
+    font-weight: bold;
+}
+
+.title-about {
+    margin: 10px 0 0;
+}
+
+.about-sum {
+    display: flex;
+    flex-flow: column nowrap;
+}
+.about-sum a {
+    color: #27649d;
+}
+.about-sum span {
+    margin: 0 0 5px;
+}
+.contacts-title {
+    padding: 10px 200px 10px 5px;
+    background-color: #27649d;
+    color: white;
+    white-space: nowrap;
+}
+
+.contacts-item {
+    margin: 10px 0;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.item-type,
+.section-name {
+    padding: 5px;
+    width: 100px;
+    background-color: #27649d;
+    color: white;
+}
+
+.section-name {
+    width: 150px;
+    height: 30px;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+}
+
+.section-name--height {
+  height: 45px;
+}
+
+.section-name span {
+  text-transform: lowercase;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.section-items {
+    flex: 90%;
+    padding: 10px;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.section-item:nth-child(2),
+.section-item:nth-child(3) {
+    border-top: 1px solid #ccc;
+}
+
+.section-item:nth-child(1) .item-desc {
+    margin-bottom: 10px;
+}
+.section-item {
+    padding: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+
+.item-name {
+    padding: 5px 0 0;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.item-subname {
+    flex-basis: 100%;
+    color: #27649d;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.item-date {
+    padding: 5px;
+    background-color: #e4eff8;
+    color: #27649d;
+    width: 250px;
+    text-align: end;
+}
+.item-desc {
+    flex-basis: 100%;
+}
+
+.skills {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.skills-item {
+    margin: 2px;
+    padding: 2px;
+    background-color: #e4eff8;
+    color: #27649d;
+    border-radius: 40%;
+}
+
+.education-name {
+    font-size: 16px;
+}
+
+.education-date {
+    width: unset;
+}
+
+@media print {
+    * {
+        -webkit-print-color-adjust: exact;
+    }
+}
