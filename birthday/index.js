@@ -1,42 +1,42 @@
 gsap.registerPlugin(ScrollTrigger);
 
-const idToTextMap = {
+let currentStep = Number(localStorage.getItem('currentStep')) || 0;
+
+const elementToTextMap = {
   'speaker': {
-    text: '',
-    isShown: '',
+    text: 'Щоб веселий настрій завжди супроводжував тебе!',
   },
   'face': {
     text: 'Та можно :)',
-    isShown: '',
   },
   'chair': {
-    text: '',
-    isShown: '',
+    text: 'Щоб пригоди були комфортіншими!',
   },
   'table': {
-    text: '',
-    isShown: '',
+    text: 'Щоб пригоди були комфортіншими!',
   },
   'dog': {
-    text: '',
-    isShown: '',
+    text: 'З днем народження!',
   },
   'thermos': {
-    text: '',
-    isShown: '',
+    text: 'Дякую за подарунок, розділяє з нами багато пригод!',
   },
   'cup2': {
-    text: '',
-    isShown: '',
+    text: 'Частина пригод!',
   },
   'cup1': {
-    text: '',
-    isShown: '',
+    text: 'Частина пригод!',
   },
   // TODO add element
-  'chair2': '',
+  // 'chair2': {
+  //   text: 'Дякую за подарунок, робить пригоди комфорнішими!',
+  //   stepToShow: 7,
+  // },
 }
 
+// 2 show chair
+// 4 show table
+// 6 show all
 const steps = [
   {
     text: 'Загубились деякі предмети.. Знайди чого не вистачає',
@@ -78,13 +78,21 @@ const steps = [
   },
 ]
 
-let currentStep = 0;
-
 window.addEventListener("load", () => {
   const infoBox = document.getElementById("infoBox");
   const infoBoxText = document.querySelector("#infoBox p");
   const nextButton = document.getElementById("nextButton");
   const inputAnser = document.getElementById("inputAnser");
+
+  const chair = document.getElementById("chair");
+  const table = document.getElementById("table");
+  const speaker = document.getElementById("speaker");
+
+  document.getElementById("clearStorage").addEventListener('click', (e) => {
+    localStorage.clear();
+    document.documentElement.scrollTop = 0;
+    window.location.reload();
+  });
 
   // Scroll
   gsap
@@ -130,9 +138,32 @@ window.addEventListener("load", () => {
   );
 
   // Hide elements that needs to find
-  document.querySelectorAll('.haveToFind').forEach(el => {
-    el.style.display = 'none';
-  });
+  if (!currentStep) {
+    document.querySelectorAll('.haveToFind').forEach(el => {
+      el.style.display = 'none';
+    });
+  } else if (isEndOfGame()) {
+    document.querySelectorAll('.clickable').forEach(el => {
+      el.addEventListener('click', (e) => {
+        if (elementToTextMap[el.id]?.text) {
+          if (elementToTextMap[el.id].shown) {
+            // click again - hide
+            elementToTextMap[el.id].shown = false;
+            gsap.fromTo(infoBox, { opacity: 1 }, { opacity: 0, duration: 0.3 });
+          } else {
+            // show
+            // Position near mouse
+            infoBox.style.bottom = `${e.clientY + 10}px`;
+            infoBox.style.left = `${e.clientX + 10}px`;
+            infoBoxText.innerText = elementToTextMap[el.id].text;
+            infoBox.style.display = "block";
+            elementToTextMap[el.id].shown = true;
+            gsap.fromTo(infoBox, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+          }
+        }
+      })
+    });
+  }
 
   nextButton.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -142,15 +173,10 @@ window.addEventListener("load", () => {
 
   function updateAndShowInfoBox(e, clickPosition = false, isNextStep = true) {
     if (isNextStep) {
-      if (steps[currentStep]?.answer) {
-        if (inputAnser.value === steps[currentStep].answer) {
-          currentStep += 1;
-          inputAnser.value = '';
-        }
-      } else {
-        currentStep += 1;
-      }
+      goToNextStep();
     }
+
+    checkHiddenElements();
 
     const step = steps[currentStep];
     const textToShow = step?.text;
@@ -195,4 +221,40 @@ window.addEventListener("load", () => {
     nextButton.style.display = "none";
     inputAnser.style.display = "none";
   };
+
+  function goToNextStep() {
+    // End or empty steps
+    if (!steps[currentStep]) {
+      return;
+    }
+
+    // just go to next step
+    if (!steps[currentStep].answer) {
+      currentStep += 1;
+    // go to next only if input has correct answer
+    } else if (inputAnser.value === steps[currentStep].answer) {
+      currentStep += 1;
+      inputAnser.value = '';
+    }
+
+    localStorage.setItem('currentStep', currentStep);
+  }
+
+  function checkHiddenElements() {
+    if (currentStep >= 2) {
+      chair.style.display = "block";
+    }
+
+    if (currentStep >= 4) {
+      table.style.display = "block";
+    }
+
+    if (currentStep >= 6) {
+      speaker.style.display = "block";
+    }
+  }
+
+  function isEndOfGame() {
+    return currentStep >= steps?.length;
+  }
 });
